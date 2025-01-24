@@ -53,7 +53,16 @@ public class Maze {
      * Find the entrance of the maze
      */
     public void findEntry() {
-
+        logger.trace(row_count);
+        for (int i = 0; i < row_count; i++) {
+            logger.trace(maze_array[i][0]);
+            if (maze_array[i][0] != '#') {
+                entry_row = i;
+                entry_col = 0;
+                break;
+            }
+        }
+        logger.info("** Found entrance at cell: (" + entry_row + ", " + entry_col + ")");
     }
 
     /**
