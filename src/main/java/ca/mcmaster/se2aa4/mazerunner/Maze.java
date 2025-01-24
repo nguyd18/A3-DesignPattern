@@ -39,6 +39,9 @@ public class Maze {
                 for (int col_index = 0; col_index < line.length(); col_index++) {
                     maze_array[row_index][col_index] = line.charAt(col_index);
                 }
+                for (int col_index = line.length(); col_index < col_count; col_index++) {
+                    maze_array[row_index][col_index] = ' ';
+                }
                 row_index++;
             }
             logger.info("** Maze loaded successfully. Size: " + row_count + "x" + col_count);
@@ -53,10 +56,8 @@ public class Maze {
      * Find the entrance of the maze
      */
     public void findEntry() {
-        logger.trace(row_count);
         for (int i = 0; i < row_count; i++) {
-            logger.trace(maze_array[i][0]);
-            if (maze_array[i][0] != '#') {
+            if (maze_array[i][0] == ' ') {
                 entry_row = i;
                 entry_col = 0;
                 break;
