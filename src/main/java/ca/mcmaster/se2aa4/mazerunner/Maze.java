@@ -9,6 +9,12 @@ public class Maze {
     
     private static final Logger logger = LogManager.getLogger();
     private char[][] maze_array;
+    private int row_count;
+    private int col_count;
+    private int entry_row;
+    private int entry_col;
+    private int exit_row;
+    private int exit_col;
 
     /**
      * Load the maze from a file
@@ -17,8 +23,8 @@ public class Maze {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file_path));
             String line;
-            int row_count = 0;
-            int col_count = 0;
+            row_count = 0;
+            col_count = 0;
 
             while ((line = reader.readLine()) != null) {
                 row_count++;
@@ -28,13 +34,14 @@ public class Maze {
             reader.close();
 
             reader = new BufferedReader(new FileReader(file_path));
-            int row = 0;
+            int row_index = 0;
             while ((line = reader.readLine()) != null) {
-                for (int col = 0; col < line.length(); col++) {
-                    maze_array[row][col] = line.charAt(col);
+                for (int col_index = 0; col_index < line.length(); col_index++) {
+                    maze_array[row_index][col_index] = line.charAt(col_index);
                 }
+                row_index++;
             }
-            logger.info("** Maze loaded successfully");
+            logger.info("** Maze loaded successfully. Size: " + row_count + "x" + col_count);
             reader.close();
 
         } catch (Exception e) {
@@ -60,6 +67,11 @@ public class Maze {
      * Print the maze on to the terminal
      */
     public void printMaze() {
-
+        for (int i = 0; i < row_count; i++) {
+            for (int j = 0; j < col_count; j++) {
+                System.out.print(maze_array[i][j]);
+            }
+            System.out.println();
+        }
     }
 }
