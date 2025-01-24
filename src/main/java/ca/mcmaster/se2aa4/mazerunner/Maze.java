@@ -70,7 +70,14 @@ public class Maze {
      * Find the exit of the maze
      */
     public void findExit() {
-
+        for (int i = 0; i < row_count; i++) {
+            if (maze_array[i][col_count - 1] == ' ') {
+                exit_row = i;
+                exit_col = col_count - 1;
+                break;
+            }
+        }
+        logger.info("** Found exit at cell: (" + exit_row + ", " + exit_col + ")");
     }
 
     /**
