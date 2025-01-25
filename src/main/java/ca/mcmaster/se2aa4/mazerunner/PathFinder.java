@@ -19,8 +19,8 @@ public class PathFinder {
     /**
      * Generates the correct path of the maze (in canonical form)
      */
-    public void generatePath() {
-
+    public void generatePath(Maze maze_obj) {
+        System.out.println("FFFF");
     }
 
 }

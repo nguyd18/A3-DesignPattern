@@ -2,6 +2,8 @@ package ca.mcmaster.se2aa4.mazerunner;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,6 +23,9 @@ public class Maze {
      */
     public void loadMaze(String file_path) {
         try {
+            if (!file_path.equals("./examples/straight.maz.txt")) {
+                throw new IOException("/!\\ Did not load in the straight.maz.txt file /!\\");
+            }
             BufferedReader reader = new BufferedReader(new FileReader(file_path));
             String line;
             row_count = 0;
@@ -47,6 +52,8 @@ public class Maze {
             logger.info("** Maze loaded successfully. Size: " + row_count + "x" + col_count);
             reader.close();
 
+        } catch(IOException e) {
+            logger.error(e.getMessage());
         } catch (Exception e) {
             logger.error("INVALID FILE PATH");
         }
@@ -90,5 +97,17 @@ public class Maze {
             }
             System.out.println();
         }
+    }
+
+    public int getRowCount() {
+        return row_count;
+    }
+
+    public int getColCount() {
+        return col_count;
+    }
+
+    public char[][] getMaze() {
+        return maze_array;
     }
 }
