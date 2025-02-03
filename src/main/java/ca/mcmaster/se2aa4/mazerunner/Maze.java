@@ -1,6 +1,7 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -13,19 +14,14 @@ public class Maze {
     private char[][] maze_array;
     private int row_count;
     private int col_count;
-    private int entry_row;
-    private int entry_col;
-    private int exit_row;
-    private int exit_col;
+    private int[] entry;
+    private int[] exit = new int[2];
 
     /**
      * Load the maze from a file
      */
     public void loadMaze(String file_path) {
         try {
-            if (!file_path.equals("./examples/straight.maz.txt")) {
-                throw new IOException("/!\\ Did not load in the straight.maz.txt file /!\\");
-            }
             BufferedReader reader = new BufferedReader(new FileReader(file_path));
             String line;
             row_count = 0;
@@ -52,10 +48,10 @@ public class Maze {
             logger.info("** Maze loaded successfully. Size: " + row_count + "x" + col_count);
             reader.close();
 
-        } catch(IOException e) {
-            logger.error(e.getMessage());
-        } catch (Exception e) {
+        } catch(FileNotFoundException e) {
             logger.error("INVALID FILE PATH");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -63,10 +59,11 @@ public class Maze {
      * Find the entrance of the maze
      */
     public void findEntry() {
+        int entry_col = 0;
+        int entry_row = 0;
         for (int i = 0; i < row_count; i++) {
             if (maze_array[i][0] == ' ') {
-                entry_row = i;
-                entry_col = 0;
+                entry = new int[]{i, 0};
                 break;
             }
         }
@@ -77,10 +74,11 @@ public class Maze {
      * Find the exit of the maze
      */
     public void findExit() {
+        int exit_col = 0;
+        int exit_row = 0;
         for (int i = 0; i < row_count; i++) {
             if (maze_array[i][col_count - 1] == ' ') {
-                exit_row = i;
-                exit_col = col_count - 1;
+                exit = new int[]{i, col_count - 1};
                 break;
             }
         }
