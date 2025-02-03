@@ -14,22 +14,15 @@ public class PathFinder {
         // System.out.println("Solving maze...");
 
         while (!isAtEnd()) {
-            // System.out.println("Not at end");
             if (canMoveForward()) {
-                // System.out.println("Can move forward");
                 moveForward();
             } else {
-                // System.out.println("Can't move forward");
                 if (canTurnRight()) {
-                    // System.out.println("Can turn right");
                     turnRight();
                 } else {
-                    // System.out.println("Can't turn right");
                     if (canTurnLeft()) {
-                        // System.out.println("Can turn left");
                         turnLeft();
                     } else {
-                        // System.out.println("Can't turn left");
                         turnLeft();
                         turnLeft();
                     }
@@ -44,7 +37,18 @@ public class PathFinder {
     }
 
     private void moveForward() {
-        // Implement logic to move forward
+        if (current_direction == Direction.NORTH) {
+            current_position[0]--;
+        }
+        else if (current_direction == Direction.EAST) {
+            current_position[1]++;
+        }
+        else if (current_direction == Direction.SOUTH) {
+            current_position[0]++;
+        }
+        else if (current_direction == Direction.WEST) {
+            current_position[1]--;
+        }
     }
 
     private void turnRight() {
