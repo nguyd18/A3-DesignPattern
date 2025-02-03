@@ -24,13 +24,7 @@ public class Main {
 
             if (cmd.hasOption("i")) {
                 logger.trace("**** Reading the maze from file " + args[1]);
-                Maze maze = new Maze();
-                maze.loadMaze(args[1]);
-                // maze.printMaze();
-                PathFinder pf = new PathFinder();
-                maze.findEntry();
-                maze.findExit();
-                pf.generatePath(maze);
+                PathFinder pf = new PathFinder(args[1]);
                 // BufferedReader reader = new BufferedReader(new FileReader(args[1]));
                 // String line;
                 // while ((line = reader.readLine()) != null) {

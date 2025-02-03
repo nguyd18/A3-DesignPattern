@@ -15,10 +15,12 @@ public class Maze {
     private int row_count;
     private int col_count;
     private int[] entry;
-    private int[] exit = new int[2];
+    private int[] exit;
 
     /**
      * Load the maze from a file
+     * 
+     * @param file_path Path to the maze file
      */
     public void loadMaze(String file_path) {
         try {
@@ -57,8 +59,10 @@ public class Maze {
 
     /**
      * Find the entrance of the maze
+     * 
+     * @return Coordinates of the entrance
      */
-    public void findEntry() {
+    public int[] getEntry() {
         int entry_col = 0;
         int entry_row = 0;
         for (int i = 0; i < row_count; i++) {
@@ -68,12 +72,15 @@ public class Maze {
             }
         }
         logger.info("** Found entrance at cell: (" + entry_row + ", " + entry_col + ")");
+        return entry;
     }
 
     /**
      * Find the exit of the maze
+     * 
+     * @return Coordinates of the exit
      */
-    public void findExit() {
+    public int[] getExit() {
         int exit_col = 0;
         int exit_row = 0;
         for (int i = 0; i < row_count; i++) {
@@ -83,6 +90,7 @@ public class Maze {
             }
         }
         logger.info("** Found exit at cell: (" + exit_row + ", " + exit_col + ")");
+        return exit;
     }
 
     /**

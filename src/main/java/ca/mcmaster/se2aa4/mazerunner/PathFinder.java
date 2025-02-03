@@ -7,10 +7,25 @@ public class PathFinder {
     private Maze maze;
     private StringBuffer path;
 
+    public PathFinder(String file_path) {
+        maze = new Maze();
+        maze.loadMaze(file_path);
+
+        current_position = new int[2];
+        current_position = maze.getEntry();
+
+        end_position = new int[2];
+        end_position = maze.getExit();
+
+
+        current_direction = Direction.EAST;
+        path = new StringBuffer();
+    }
+
     /**
      * Solve the maze
      */
-    public void solveMaze(Maze maze_obj) {
+    public void solveMaze() {
         // System.out.println("Solving maze...");
 
         while (!isAtEnd()) {
@@ -33,7 +48,6 @@ public class PathFinder {
 
     private boolean canMoveForward() {
         // Implement logic to check if you can move forward
-        return true;
     }
 
     private void moveForward() {
@@ -82,7 +96,10 @@ public class PathFinder {
     }
 
     private boolean isAtEnd() {
-        // Implement logic to check if you have reached the end of the maze
+        if (current_position[0] == end_position[0] && current_position[1] == end_position[1]) {
+            return true;
+        }
+        return false;
     }
 
     /**
