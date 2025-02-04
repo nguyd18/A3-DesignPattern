@@ -47,7 +47,27 @@ public class PathFinder {
     }
 
     private boolean canMoveForward() {
-        // Implement logic to check if you can move forward
+        if (current_direction == Direction.NORTH) {
+            if (maze.isWall(current_position[0] - 1, current_position[1])) {
+                return false;
+            }
+        }
+        else if (current_direction == Direction.EAST) {
+            if (maze.isWall(current_position[0], current_position[1] + 1)) {
+                return false;
+            }
+        }
+        else if (current_direction == Direction.SOUTH) {
+            if (maze.isWall(current_position[0] + 1, current_position[1])) {
+                return false;
+            }
+        }
+        else if (current_direction == Direction.WEST) {
+            if (maze.isWall(current_position[0], current_position[1] - 1)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void moveForward() {

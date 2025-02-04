@@ -71,7 +71,7 @@ public class Maze {
                 break;
             }
         }
-        logger.info("** Found entrance at cell: (" + entry_row + ", " + entry_col + ")");
+        logger.info("** Found entrance at cell: (" + entry_col + ", " + entry_row + ")");
         return entry;
     }
 
@@ -89,8 +89,15 @@ public class Maze {
                 break;
             }
         }
-        logger.info("** Found exit at cell: (" + exit_row + ", " + exit_col + ")");
+        logger.info("** Found exit at cell: (" + exit_col + ", " + exit_row + ")");
         return exit;
+    }
+
+    public boolean isWall(int x, int y) {
+        if (y < 0 || y >= row_count || x < 0 || x >= col_count) {
+            return true;
+        }
+        return maze_array[y][x] == '#';
     }
 
     /**
