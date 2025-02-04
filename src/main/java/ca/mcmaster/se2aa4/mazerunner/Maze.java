@@ -63,15 +63,15 @@ public class Maze {
      * @return Coordinates of the entrance
      */
     public int[] getEntry() {
-        int entry_col = 0;
         int entry_row = 0;
         for (int i = 0; i < row_count; i++) {
             if (maze_array[i][0] == ' ') {
-                entry = new int[]{i, 0};
+                entry_row = i;
+                entry = new int[]{0, entry_row};
                 break;
             }
         }
-        logger.info("** Found entrance at cell: (" + entry_col + ", " + entry_row + ")");
+        logger.info("** Found entrance at cell: (" + 0 + ", " + entry_row + ")");
         return entry;
     }
 
@@ -81,11 +81,12 @@ public class Maze {
      * @return Coordinates of the exit
      */
     public int[] getExit() {
-        int exit_col = 0;
+        int exit_col = col_count - 1;
         int exit_row = 0;
         for (int i = 0; i < row_count; i++) {
-            if (maze_array[i][col_count - 1] == ' ') {
-                exit = new int[]{i, col_count - 1};
+            if (maze_array[i][exit_col] == ' ') {
+                exit_row = i;
+                exit = new int[]{exit_col, i};
                 break;
             }
         }

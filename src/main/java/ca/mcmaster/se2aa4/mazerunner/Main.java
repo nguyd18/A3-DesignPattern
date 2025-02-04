@@ -25,6 +25,7 @@ public class Main {
             if (cmd.hasOption("i")) {
                 logger.trace("**** Reading the maze from file " + args[1]);
                 PathFinder pf = new PathFinder(args[1]);
+                pf.solveMaze();
                 // BufferedReader reader = new BufferedReader(new FileReader(args[1]));
                 // String line;
                 // while ((line = reader.readLine()) != null) {
@@ -43,8 +44,5 @@ public class Main {
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");
         }
-        logger.trace("**** Computing path");
-        logger.error("PATH NOT COMPUTED");
-        logger.info("** End of MazeRunner");
     }
 }
