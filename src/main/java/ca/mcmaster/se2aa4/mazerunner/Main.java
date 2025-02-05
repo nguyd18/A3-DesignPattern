@@ -38,7 +38,8 @@ public class Main {
                 //     }
                 //     logger.debug(System.lineSeparator());
                 // }
-            } else {
+            }
+            else {
                 throw new Exception();
             }
         } catch(Exception e) {

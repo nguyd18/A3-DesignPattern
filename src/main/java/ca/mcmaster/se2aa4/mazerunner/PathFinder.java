@@ -82,6 +82,39 @@ public class PathFinder {
         }
         logger.info("** Maze has been solved!");
         System.out.println(path.toString());
+        System.out.println(factorizedPath(path.toString()));
+    }
+
+    public String factorizedPath(String canonical_path) {
+        if (canonical_path.length() == 0) {
+            return "";
+        }
+
+        String path = canonical_path.replaceAll("\\s", "");
+        logger.trace("**** Path without whitespaces: " + path);
+        StringBuffer factorized = new StringBuffer();
+        char current_char = path.charAt(0);
+        int count = 1;
+        for (int i = 1; i < path.length(); i++) {
+            if (path.charAt(i) == current_char) {
+                count++;
+            }
+            else {
+                if (count > 1) {
+                    factorized.append(count);
+                }
+                factorized.append(current_char);
+                current_char = path.charAt(i);
+                count = 1;
+                factorized.append(" ");
+            }
+        }
+        
+        if (count > 1) {
+            factorized.append(count);
+        }
+        factorized.append(current_char);
+        return factorized.toString();
     }
 
     private Direction getRightDirection(Direction d) {
