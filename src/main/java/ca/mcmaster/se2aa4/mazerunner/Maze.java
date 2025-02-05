@@ -60,18 +60,19 @@ public class Maze {
     /**
      * Find the entrance of the maze
      * 
-     * @return Coordinates of the entrance
+     * @return Coordinates of the entrance format (row, col)
      */
     public int[] getEntry() {
         int entry_row = 0;
+        int entry_col = 0;
         for (int i = 0; i < row_count; i++) {
-            if (maze_array[i][0] == ' ') {
+            if (maze_array[i][entry_col] == ' ') {
                 entry_row = i;
-                entry = new int[]{0, entry_row};
+                entry = new int[]{entry_row, entry_col};
                 break;
             }
         }
-        logger.info("** Found entrance at cell: (" + 0 + ", " + entry_row + ")");
+        logger.info("** Found entrance. Row: " + entry[0] + " Col: " + entry[1]);
         return entry;
     }
 
@@ -81,24 +82,24 @@ public class Maze {
      * @return Coordinates of the exit
      */
     public int[] getExit() {
-        int exit_col = col_count - 1;
         int exit_row = 0;
+        int exit_col = col_count - 1;
         for (int i = 0; i < row_count; i++) {
             if (maze_array[i][exit_col] == ' ') {
                 exit_row = i;
-                exit = new int[]{exit_col, i};
+                exit = new int[]{exit_row, exit_col};
                 break;
             }
         }
-        logger.info("** Found exit at cell: (" + exit_col + ", " + exit_row + ")");
+        logger.info("** Found exit. Row: " + exit[0] + " Col: " + exit[1]);
         return exit;
     }
 
-    public boolean isWall(int x, int y) {
-        if (y < 0 || y >= row_count || x < 0 || x >= col_count) {
+    public boolean isWall(int row, int col) {
+        if (row < 0 || row >= row_count || col < 0 || col >= col_count) {
             return true;
         }
-        return maze_array[y][x] == '#';
+        return maze_array[row][col] == '#';
     }
 
     /**

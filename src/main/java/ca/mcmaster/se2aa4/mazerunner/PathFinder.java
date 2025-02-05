@@ -32,38 +32,100 @@ public class PathFinder {
      */
     public void solveMaze() {
         logger.info("** Trying to solve the maze");
-        logger.trace("**** Current Position: (" + current_position[0] + ", " + current_position[1] + ")");
+        logger.trace("**** Current Position. Row: " + current_position[0] + " Col: " + current_position[1]);
         while (!isAtEnd()) {
-            if (!canMoveForward()) {
-                // Adjust direction according to your desired priority: forward, right, left, backward.
-                // For example, try turning right, then left, then backwards until a move is available.
-                if (!tryChangeDirection()) {
-                    logger.error("No moves available. Maze might be unsolvable.");
-                    break;
-                }
+            logger.trace("**** Current Direction: " + current_direction);
+            // Check the diagonal cell (front-right)
+            if (canMove(current_direction) && canMove(getRightDirection(current_direction))) {
+                turnRight();
+                moveForward();
+                logger.trace("**** Moved forward and turned right to: (" + current_position[0] + ", " + current_position[1] + ")");
             }
-            // Now that we (hopefully) have a clear path, move forward.
+
+            // Check the cell in front
+            if (canMove(current_direction)) {
+                moveForward();
+                logger.trace("**** Moved forward to: (" + current_position[0] + ", " + current_position[1] + ")");
+                continue;
+            }
+            // Check the cell to the right
+            if (canMove(getRightDirection(current_direction))) {
+                turnRight();
+                moveForward();
+                logger.trace("**** Turned right and moved forward to: (" + current_position[0] + ", " + current_position[1] + ")");
+                continue;
+            }
+
+            // Check the cell to the left
+            if (canMove(getLeftDirection(current_direction))) {
+                turnLeft();
+                moveForward();
+                logger.trace("**** Turned left and moved forward to: (" + current_position[0] + ", " + current_position[1] + ")");
+                continue;
+            }
+
+            // Dead end
+            turnLeft();
+            turnLeft();
             moveForward();
-            logger.trace("Moved forward to: (" + current_position[0] + ", " + current_position[1] + ")");
+            logger.trace("**** Dead end. Turned around and moved forward to: (" + current_position[0] + ", " + current_position[1] + ")");
         }
-        if (isAtEnd()) {
-            logger.info("** Maze has been solved!");
+        logger.info("** Maze has been solved!");
+    }
+
+    private Direction getRightDirection(Direction d) {
+        if (d == Direction.NORTH) {
+            return Direction.EAST;
+        }
+        else if (d == Direction.EAST) {
+            return Direction.SOUTH;
+        }
+        else if (d == Direction.SOUTH) {
+            return Direction.WEST;
+        }
+        else {
+            return Direction.NORTH;
         }
     }
-    
-    // Helper method to change direction until a move is available.
-    private boolean tryChangeDirection() {
-        // Try turning right.
-        turnRight();
-        if (canMoveForward()) return true;
-        // If right is blocked, try left from original direction.
-        turnLeft(); // This undoes the right turn.
-        turnLeft(); // Now we’re turned left.
-        if (canMoveForward()) return true;
-        // As a last resort, turn to face backward.
-        turnLeft(); // This results in the backward direction relative to original.
-        return canMoveForward();
-    }  
+
+    private Direction getLeftDirection(Direction d) {
+        if (d == Direction.NORTH) {
+            return Direction.WEST;
+        }
+        else if (d == Direction.WEST) {
+            return Direction.SOUTH;
+        }
+        else if (d == Direction.SOUTH) {
+            return Direction.EAST;
+        }
+        else {
+            return Direction.NORTH;
+        }
+    }
+
+    private boolean canMove(Direction d) {
+        if (d == Direction.NORTH) {
+            if (maze.isWall(current_position[0] - 1, current_position[1])) {
+                return false;
+            }
+        }
+        else if (d == Direction.EAST) {
+            if (maze.isWall(current_position[0], current_position[1] + 1)) {
+                return false;
+            }
+        }
+        else if (d == Direction.SOUTH) {
+            if (maze.isWall(current_position[0] + 1, current_position[1])) {
+                return false;
+            }
+        }
+        else if (d == Direction.WEST) {
+            if (maze.isWall(current_position[0], current_position[1] - 1)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     private void moveForward() {
         if (current_direction == Direction.NORTH) {
