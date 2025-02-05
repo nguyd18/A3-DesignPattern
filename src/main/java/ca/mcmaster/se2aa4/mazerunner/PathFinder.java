@@ -40,12 +40,16 @@ public class PathFinder {
                 turnRight();
                 moveForward();
                 logger.trace("**** Moved forward and turned right to: (" + current_position[0] + ", " + current_position[1] + ")");
+                logger.trace("**** R F");
+                path.append(" R F");
             }
 
             // Check the cell in front
             if (canMove(current_direction)) {
                 moveForward();
                 logger.trace("**** Moved forward to: (" + current_position[0] + ", " + current_position[1] + ")");
+                logger.trace("**** F");
+                path.append("F");
                 continue;
             }
             // Check the cell to the right
@@ -53,6 +57,8 @@ public class PathFinder {
                 turnRight();
                 moveForward();
                 logger.trace("**** Turned right and moved forward to: (" + current_position[0] + ", " + current_position[1] + ")");
+                logger.trace("**** R F");
+                path.append(" R F");
                 continue;
             }
 
@@ -61,6 +67,8 @@ public class PathFinder {
                 turnLeft();
                 moveForward();
                 logger.trace("**** Turned left and moved forward to: (" + current_position[0] + ", " + current_position[1] + ")");
+                logger.trace(" L F");
+                path.append(" L F");
                 continue;
             }
 
@@ -69,8 +77,11 @@ public class PathFinder {
             turnLeft();
             moveForward();
             logger.trace("**** Dead end. Turned around and moved forward to: (" + current_position[0] + ", " + current_position[1] + ")");
+            logger.trace(" L L F");
+            path.append(" L L F");
         }
         logger.info("** Maze has been solved!");
+        System.out.println(path.toString());
     }
 
     private Direction getRightDirection(Direction d) {
@@ -172,45 +183,11 @@ public class PathFinder {
         }
     }
 
-    /**
-     * @return True if you can move forward, false if you cannot
-     */
-    private boolean canMoveForward() {
-        if (current_direction == Direction.NORTH) {
-            if (maze.isWall(current_position[0] - 1, current_position[1])) {
-                return false;
-            }
-        }
-        else if (current_direction == Direction.EAST) {
-            if (maze.isWall(current_position[0], current_position[1] + 1)) {
-                return false;
-            }
-        }
-        else if (current_direction == Direction.SOUTH) {
-            if (maze.isWall(current_position[0] + 1, current_position[1])) {
-                return false;
-            }
-        }
-        else if (current_direction == Direction.WEST) {
-            if (maze.isWall(current_position[0], current_position[1] - 1)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     private boolean isAtEnd() {
         if (current_position[0] == end_position[0] && current_position[1] == end_position[1]) {
             return true;
         }
         return false;
-    }
-
-    /**
-     * Generates the correct path of the maze (in canonical form)
-     */
-    public void generatePath(Maze maze_obj) {
-        System.out.println("FFFF");
     }
 
 }
