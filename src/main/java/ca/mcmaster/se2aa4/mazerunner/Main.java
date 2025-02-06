@@ -17,12 +17,18 @@ public class Main {
         logger.info("** Starting Maze Runner");
         Options options = new Options();
         options.addOption("i", "flag", true, "load maze file");
+        options.addOption("p", "flag", true, "validates path in a given maze");
         CommandLineParser parser = new DefaultParser();
 
         try {
             CommandLine cmd = parser.parse(options, args);
 
-            if (cmd.hasOption("i")) {
+            if (cmd.hasOption("i") && cmd.hasOption("p")) {
+                logger.trace("**** Reading the maze from file " + args[1]);
+                PathValidator pv = new PathValidator(args[1]);
+                pv.validatePath(args[3]);
+            }
+            else if (cmd.hasOption("i")) {
                 logger.trace("**** Reading the maze from file " + args[1]);
                 PathFinder pf = new PathFinder(args[1]);
                 pf.solveMaze();
