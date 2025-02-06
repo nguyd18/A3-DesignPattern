@@ -21,7 +21,6 @@ public class PathFinder {
         end_position = new int[2];
         end_position = maze.getExit();
 
-
         current_direction = Direction.EAST;
         path = new StringBuffer();
     }
@@ -81,7 +80,7 @@ public class PathFinder {
         }
         logger.info("** Maze has been solved!");
         System.out.println(path.toString());
-        System.out.println(factorizedPath(path.toString()));
+        // System.out.println(factorizedPath(path.toString()));
     }
 
     public String factorizedPath(String canonical_path) {

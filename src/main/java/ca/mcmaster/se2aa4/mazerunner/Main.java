@@ -25,25 +25,16 @@ public class Main {
 
             if (cmd.hasOption("i") && cmd.hasOption("p")) {
                 logger.trace("**** Reading the maze from file " + args[1]);
+                logger.trace("**** Validating path...");
                 PathValidator pv = new PathValidator(args[1]);
-                pv.validatePath(args[3]);
+                String result = pv.validatePath(args[3]);
+                System.out.println(result);
             }
             else if (cmd.hasOption("i")) {
                 logger.trace("**** Reading the maze from file " + args[1]);
+                logger.trace("**** Finding path...");
                 PathFinder pf = new PathFinder(args[1]);
                 pf.solveMaze();
-                // BufferedReader reader = new BufferedReader(new FileReader(args[1]));
-                // String line;
-                // while ((line = reader.readLine()) != null) {
-                //     for (int idx = 0; idx < line.length(); idx++) {
-                //         if (line.charAt(idx) == '#') {
-                //             logger.debug("WALL ");
-                //         } else if (line.charAt(idx) == ' ') {
-                //             logger.debug("PASS ");
-                //         }
-                //     }
-                //     logger.debug(System.lineSeparator());
-                // }
             }
             else {
                 throw new Exception();
