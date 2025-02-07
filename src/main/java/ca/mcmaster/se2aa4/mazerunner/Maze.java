@@ -17,12 +17,25 @@ public class Maze {
     private int[] entry;
     private int[] exit;
 
+    /**
+     * Initializes a 2D character array to store the maze 
+     * 
+     * @param rows the amount of rows in the maze
+     * @param cols the amount of columns in the maze
+     */
     public void initialize(int rows, int cols) {
         this.row_count = rows;
         this.col_count = cols;
         maze_array = new char[row_count][col_count];
     }
 
+    /**
+     * Stores the maze one row at a time
+     * if the row is incomplete, it will automatically fill in with whitespaces
+     * 
+     * @param row_index the current row of the maze
+     * @param line the row of the maze consisting of spaces and '#'
+     */
     public void fillRow(int row_index, String line) {
         for (int col_index = 0; col_index < line.length(); col_index++) {
             maze_array[row_index][col_index] = line.charAt(col_index);
@@ -35,7 +48,7 @@ public class Maze {
     /**
      * Load the maze from a file
      * 
-     * @param file_path Path to the maze file
+     * @param file_path path to the maze file
      */
     public void loadMaze(String file_path) {
         try {
@@ -75,7 +88,7 @@ public class Maze {
     /**
      * Find the entrance of the maze
      * 
-     * @return Coordinates of the entrance format (row, col)
+     * @return coordinates of the entrance format (row, col)
      */
     public int[] getEntry() {
         int entry_row = 0;
@@ -94,7 +107,7 @@ public class Maze {
     /**
      * Find the exit of the maze
      * 
-     * @return Coordinates of the exit
+     * @return coordinates of the exit
      */
     public int[] getExit() {
         int exit_row = 0;
@@ -110,6 +123,13 @@ public class Maze {
         return exit;
     }
 
+    /**
+     * Sees if the cell is a wall
+     * 
+     * @param row row of the cell
+     * @param col column of the cell
+     * @return true if the cell is a wall, false if the cell is not a wall
+     */
     public boolean isWall(int row, int col) {
         if (row < 0 || row >= row_count || col < 0 || col >= col_count) {
             return true;

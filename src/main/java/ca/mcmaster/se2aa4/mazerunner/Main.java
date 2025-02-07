@@ -33,8 +33,10 @@ public class Main {
             else if (cmd.hasOption("i")) {
                 logger.trace("**** Reading the maze from file " + args[1]);
                 logger.trace("**** Finding path...");
-                PathFinder pf = new PathFinder(args[1]);
-                pf.solveMaze();
+                MazeLoader loader = new MazeLoader();
+                Maze maze = loader.load(args[1]);
+                PathFinder pf = new PathFinder(maze);
+                pf.findPath();
             }
             else {
                 throw new Exception();
