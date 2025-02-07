@@ -17,6 +17,21 @@ public class Maze {
     private int[] entry;
     private int[] exit;
 
+    public void initialize(int rows, int cols) {
+        this.row_count = rows;
+        this.col_count = cols;
+        maze_array = new char[row_count][col_count];
+    }
+
+    public void fillRow(int row_index, String line) {
+        for (int col_index = 0; col_index < line.length(); col_index++) {
+            maze_array[row_index][col_index] = line.charAt(col_index);
+        }
+        for (int col_index = line.length(); col_index < col_count; col_index++) {
+            maze_array[row_index][col_index] = ' ';
+        }
+    }
+
     /**
      * Load the maze from a file
      * 
@@ -100,29 +115,5 @@ public class Maze {
             return true;
         }
         return maze_array[row][col] == '#';
-    }
-
-    /**
-     * Print the maze on to the terminal
-     */
-    public void printMaze() {
-        for (int i = 0; i < row_count; i++) {
-            for (int j = 0; j < col_count; j++) {
-                System.out.print(maze_array[i][j]);
-            }
-            System.out.println();
-        }
-    }
-
-    public int getRowCount() {
-        return row_count;
-    }
-
-    public int getColCount() {
-        return col_count;
-    }
-
-    public char[][] getMaze() {
-        return maze_array;
     }
 }
