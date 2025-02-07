@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class PathFinder {
-    
+
     private int[] current_position;
     private int[] end_position;
     private Direction current_direction;
@@ -123,6 +123,12 @@ public class PathFinder {
         return factorized.toString();
     }
 
+    /**
+     * Get the right adjacent cell of the finder without turning right
+     * 
+     * @param d current direction of the finder
+     * @return the direction that results of looking right
+     */
     private Direction getRightDirection(Direction d) {
         if (d == Direction.NORTH) {
             return Direction.EAST;
@@ -138,6 +144,12 @@ public class PathFinder {
         }
     }
 
+    /**
+     * Get the left adjacent cell of the finder without turning left
+     * 
+     * @param d current direction of the finder
+     * @return the direction that results of looking left
+     */
     private Direction getLeftDirection(Direction d) {
         if (d == Direction.NORTH) {
             return Direction.WEST;

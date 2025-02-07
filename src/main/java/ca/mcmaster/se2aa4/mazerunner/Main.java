@@ -23,18 +23,18 @@ public class Main {
         try {
             CommandLine cmd = parser.parse(options, args);
 
+            MazeLoader loader = new MazeLoader();
+            Maze maze = loader.load(args[1]);
             if (cmd.hasOption("i") && cmd.hasOption("p")) {
                 logger.trace("**** Reading the maze from file " + args[1]);
                 logger.trace("**** Validating path...");
-                PathValidator pv = new PathValidator(args[1]);
+                PathValidator pv = new PathValidator(maze);
                 String result = pv.validatePath(args[3]);
                 System.out.println(result);
             }
             else if (cmd.hasOption("i")) {
                 logger.trace("**** Reading the maze from file " + args[1]);
                 logger.trace("**** Finding path...");
-                MazeLoader loader = new MazeLoader();
-                Maze maze = loader.load(args[1]);
                 PathFinder pf = new PathFinder(maze);
                 pf.findPath();
             }

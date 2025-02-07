@@ -4,25 +4,31 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class PathValidator {
+
     private int[] current_position;
     private int[] end_position;
     private Direction current_direction;
     private Maze maze;
     private static final Logger logger = LogManager.getLogger();
 
-    public PathValidator(String file_path) {
-        maze = new Maze();
-        maze.loadMaze(file_path);
-
-        current_position = new int[2];
-        current_position = maze.getEntry();
-
-        end_position = new int[2];
-        end_position = maze.getExit();
-
-        current_direction = Direction.EAST;
+    /**
+     * Constructor method to initialize instance variables
+     * 
+     * @param maze the maze object
+     */
+    public PathValidator(Maze maze) {
+        this.maze = maze;
+        this.current_position = maze.getEntry();
+        this.end_position = maze.getExit();
+        this.current_direction = Direction.EAST;
     }
 
+    /**
+     * Check if the path is a valid solution to the given maze
+     * 
+     * @param path the path argument passed by the user
+     * @return a result message: "correct path" or "incorrect path"
+     */
     public String validatePath(String path) {
         logger.trace("**** Input path: " + path);
         logger.trace("**** Factorized to canonical: " + convertToCanonical(path));
@@ -37,18 +43,15 @@ public class PathValidator {
                 }
                 else {
                     // if it sees that it can hit the wall, break
-                    // else move forward
                     break;
                 }
 
             }
             else if (current_char == 'R') {
-                // turn right
-                turnRight();
+                current_direction = current_direction.turnRight();
             }
             else {
-                // turn left
-                turnLeft();
+                current_direction = current_direction.turnLeft();
             }
         }
 
@@ -97,6 +100,12 @@ public class PathValidator {
         }
     }
 
+    /**
+     * Checks if the validator can move by checking its adjacent cells
+     * 
+     * @param d the direction the validator is facing
+     * @return true if can move, false if there is a wall in the way
+     */
     private boolean canMove(Direction d) {
         if (d == Direction.NORTH) {
             if (maze.isWall(current_position[0] - 1, current_position[1])) {
@@ -121,6 +130,9 @@ public class PathValidator {
         return true;
     }
 
+    /**
+     * Moves the vaildator forward to the next cell
+     */
     private void moveForward() {
         if (current_direction == Direction.NORTH) {
             current_position[0]--;
@@ -136,36 +148,9 @@ public class PathValidator {
         }
     }
 
-    private void turnRight() {
-        if (current_direction == Direction.NORTH) {
-            current_direction = Direction.EAST;
-        }
-        else if (current_direction == Direction.EAST) {
-            current_direction = Direction.SOUTH;
-        }
-        else if (current_direction == Direction.SOUTH) {
-            current_direction = Direction.WEST;
-        }
-        else if (current_direction == Direction.WEST) {
-            current_direction = Direction.NORTH;
-        }
-    }
-
-    private void turnLeft() {
-        if (current_direction == Direction.NORTH) {
-            current_direction = Direction.WEST;
-        }
-        else if (current_direction == Direction.WEST) {
-            current_direction = Direction.SOUTH;
-        }
-        else if (current_direction == Direction.SOUTH) {
-            current_direction = Direction.EAST;
-        }
-        else if (current_direction == Direction.EAST) {
-            current_direction = Direction.NORTH;
-        }
-    }
-
+    /**
+     * @return true if the validator is at the end of the maze, false if it is not
+     */
     private boolean isAtEnd() {
         if (current_position[0] == end_position[0] && current_position[1] == end_position[1]) {
             return true;
