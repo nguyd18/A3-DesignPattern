@@ -3,7 +3,7 @@ package ca.mcmaster.se2aa4.mazerunner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class PathFinder {
+public class PathFinder implements MazeSolver{
 
     private int[] current_position;
     private int[] end_position;
@@ -28,6 +28,7 @@ public class PathFinder {
     /**
      * Finds the solution path to the maze
      */
+    @Override
     public void findPath() {
         logger.info("** Trying to solve the maze");
         logger.trace("**** Current Position. Row: " + current_position[0] + " Col: " + current_position[1]);
@@ -83,7 +84,6 @@ public class PathFinder {
         }
         logger.info("** Maze has been solved!");
         System.out.println(canonical_path.toString());
-        System.out.println(PathFormatter.factorizedPath(canonical_path.toString()));
     }
 
     /**

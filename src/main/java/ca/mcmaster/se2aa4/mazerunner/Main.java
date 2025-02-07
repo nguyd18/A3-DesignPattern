@@ -47,8 +47,8 @@ public class Main {
             }
             else if (cmd.hasOption("i")) {
                 logger.trace("**** Finding path...");
-                PathFinder pf = new PathFinder(maze);
-                pf.findPath();
+                MazeSolver solver = new PathFinder(maze);
+                solver.findPath();
             }
             else {
                 throw new Exception();
