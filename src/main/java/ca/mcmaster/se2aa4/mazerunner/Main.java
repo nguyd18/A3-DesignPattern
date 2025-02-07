@@ -23,17 +23,29 @@ public class Main {
         try {
             CommandLine cmd = parser.parse(options, args);
 
+            if (!cmd.hasOption("i")) {
+                logger.error("Maze file path is required (-i <file>)");
+                return;
+            }
+
+            String file_path = cmd.getOptionValue("i");
             MazeLoader loader = new MazeLoader();
-            Maze maze = loader.load(args[1]);
-            if (cmd.hasOption("i") && cmd.hasOption("p")) {
-                logger.trace("**** Reading the maze from file " + args[1]);
+            Maze maze = loader.load(file_path);
+
+            if (cmd.hasOption("p")) {
+                String input_path = cmd.getOptionValue("p");
+
+                if (input_path == null) {
+                    logger.error("A path to the maze is required when using -p flag");
+                    return;
+                }
+
                 logger.trace("**** Validating path...");
                 PathValidator pv = new PathValidator(maze);
-                String result = pv.validatePath(args[3]);
+                String result = pv.validatePath(input_path);
                 System.out.println(result);
             }
             else if (cmd.hasOption("i")) {
-                logger.trace("**** Reading the maze from file " + args[1]);
                 logger.trace("**** Finding path...");
                 PathFinder pf = new PathFinder(maze);
                 pf.findPath();
@@ -41,6 +53,8 @@ public class Main {
             else {
                 throw new Exception();
             }
+        } catch (ParseException e){
+            logger.error("Failed to parse command line arguments");
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");
         }
