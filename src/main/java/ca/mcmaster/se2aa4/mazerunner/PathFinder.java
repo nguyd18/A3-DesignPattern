@@ -83,44 +83,7 @@ public class PathFinder {
         }
         logger.info("** Maze has been solved!");
         System.out.println(canonical_path.toString());
-    }
-
-    /**
-     * Converts the canonical path into a factorized path
-     * 
-     * @param input_path the input canonical path
-     * @return the factorized path
-     */
-    public String factorizedPath(String input_path) {
-        if (input_path.length() == 0) {
-            return "";
-        }
-
-        String path = input_path.replaceAll("\\s", "");
-        logger.trace("**** Path without whitespaces: " + path);
-        StringBuffer factorized = new StringBuffer();
-        char current_char = path.charAt(0);
-        int count = 1;
-        for (int i = 1; i < path.length(); i++) {
-            if (path.charAt(i) == current_char) {
-                count++;
-            }
-            else {
-                if (count > 1) {
-                    factorized.append(count);
-                }
-                factorized.append(current_char);
-                current_char = path.charAt(i);
-                count = 1;
-                factorized.append(" ");
-            }
-        }
-        
-        if (count > 1) {
-            factorized.append(count);
-        }
-        factorized.append(current_char);
-        return factorized.toString();
+        System.out.println(PathFormatter.factorizedPath(canonical_path.toString()));
     }
 
     /**

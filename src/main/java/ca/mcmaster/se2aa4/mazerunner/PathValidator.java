@@ -31,8 +31,8 @@ public class PathValidator {
      */
     public String validatePath(String path) {
         logger.trace("**** Input path: " + path);
-        logger.trace("**** Factorized to canonical: " + convertToCanonical(path));
-        String canonical_path = convertToCanonical(path).replaceAll("\\s", "");
+        logger.trace("**** Factorized to canonical: " + PathFormatter.convertToCanonical(path));
+        String canonical_path = PathFormatter.convertToCanonical(path).replaceAll("\\s", "");
 
         for (int i = 0; i < canonical_path.length(); i++) {
             char current_char = canonical_path.charAt(i);
@@ -59,45 +59,6 @@ public class PathValidator {
             return "correct path";
         }
         return "incorrect path";
-    }
-
-    private String convertToCanonical(String path) {
-        logger.trace("**** Checking if path is canonical");
-        boolean isFactorized = false;
-        for (char c : path.toCharArray()) {
-            if (Character.isDigit(c)) {
-                logger.trace("**** Path is factorized");
-                isFactorized = true;
-                break;
-            }
-        }
-        if (isFactorized) {
-            StringBuffer canonical_path = new StringBuffer();
-            int count = 0;
-            for (int i = 0; i < path.length(); i++) {
-                char current_char = path.charAt(i);
-                if (Character.isDigit(current_char)) {
-                    count = count * 10 + (current_char - '0');
-                    logger.trace("**** Read in a " + count);
-                }
-                else {
-                    if (count == 0) {
-                        count = 1;
-                    }
-
-                    for (int j = 0; j < count; j++) {
-                        canonical_path.append(current_char);
-                    }
-                    count = 0;
-                }
-            }
-            logger.trace("**** Path is now canonical");
-            return canonical_path.toString();
-        }
-        else {
-            logger.trace("**** Path is already canonical");
-            return path;
-        }
     }
 
     /**
