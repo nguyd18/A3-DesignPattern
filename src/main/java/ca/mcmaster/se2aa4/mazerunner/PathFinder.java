@@ -83,7 +83,7 @@ public class PathFinder implements MazeSolver{
             canonical_path.append(" L L F");
         }
         logger.info("** Maze has been solved!");
-        System.out.println(canonical_path.toString());
+        System.out.println(PathFormatter.factorizedPath(canonical_path.toString()));
     }
 
     /**
