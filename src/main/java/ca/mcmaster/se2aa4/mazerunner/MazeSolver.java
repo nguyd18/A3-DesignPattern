@@ -4,5 +4,5 @@ public interface MazeSolver {
     /**
      * Interface for implementations of maze solving algorithms
      */
-    void findPath();
+    String findPath();
 }
