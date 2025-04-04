@@ -58,6 +58,7 @@ public class Main {
             logger.error("Failed to parse command line arguments");
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");
+            System.out.println(e.getMessage());
         }
     }
 }
