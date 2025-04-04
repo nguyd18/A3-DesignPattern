@@ -42,7 +42,7 @@ public class PathValidator {
             char current_char = canonical_path.charAt(i);
             if (current_char == 'F') {
                 // see if it can move forward
-                if (canMove(navigator.getDirection())) {
+                if (navigator.canMove(maze, navigator.getDirection())) {
                     moveForward.execute();
                 }
                 else {
@@ -63,36 +63,6 @@ public class PathValidator {
             return "correct path";
         }
         return "incorrect path";
-    }
-
-    /**
-     * Checks if the validator can move by checking its adjacent cells
-     * 
-     * @param d the direction the validator is facing
-     * @return true if can move, false if there is a wall in the way
-     */
-    private boolean canMove(Direction d) {
-        if (d == Direction.NORTH) {
-            if (maze.isWall(navigator.getPosition()[0] - 1, navigator.getPosition()[1])) {
-                return false;
-            }
-        }
-        else if (d == Direction.EAST) {
-            if (maze.isWall(navigator.getPosition()[0], navigator.getPosition()[1] + 1)) {
-                return false;
-            }
-        }
-        else if (d == Direction.SOUTH) {
-            if (maze.isWall(navigator.getPosition()[0] + 1, navigator.getPosition()[1])) {
-                return false;
-            }
-        }
-        else if (d == Direction.WEST) {
-            if (maze.isWall(navigator.getPosition()[0], navigator.getPosition()[1] - 1)) {
-                return false;
-            }
-        }
-        return true;
     }
 
     /**

@@ -40,7 +40,7 @@ public class PathFinder implements MazeSolver{
 
         while (!isAtEnd()) {
             // Check the diagonal cell (front-right)
-            if (canMove(navigator.getDirection()) && canMove(navigator.getDirection().getRightDirection(navigator.getDirection()))) {
+            if (navigator.canMove(maze, navigator.getDirection()) && navigator.canMove(maze, navigator.getRightDirection())) {
                 turnRight.execute();
                 moveForward.execute();
                 logger.trace("**** R F");
@@ -48,7 +48,7 @@ public class PathFinder implements MazeSolver{
             }
 
             // Check the cell in front
-            if (canMove(navigator.getDirection())) {
+            if (navigator.canMove(maze, navigator.getDirection())) {
                 moveForward.execute();
                 logger.trace("**** F");
                 canonical_path.append("F");
@@ -56,7 +56,7 @@ public class PathFinder implements MazeSolver{
             }
 
             // Check the cell to the right
-            if (canMove(navigator.getDirection().getRightDirection(navigator.getDirection()))) {
+            if (navigator.canMove(maze, navigator.getRightDirection())) {
                 turnRight.execute();
                 moveForward.execute();
                 logger.trace("**** R F");
@@ -65,7 +65,7 @@ public class PathFinder implements MazeSolver{
             }
 
             // Check the cell to the left
-            if (canMove(navigator.getDirection().getLeftDirection(navigator.getDirection()))) {
+            if (navigator.canMove(maze, navigator.getLeftDirection())) {
                 turnLeft.execute();
                 moveForward.execute();
                 logger.trace("**** L F");
@@ -82,36 +82,6 @@ public class PathFinder implements MazeSolver{
         }
         logger.info("** Maze has been solved!");
         return PathFormatter.factorizedPath(canonical_path.toString());
-    }
-
-    /**
-     * Checks if the finder can move by checking its adjacent cells
-     * 
-     * @param d the direction the finder is facing
-     * @return true if can move, false if there is a wall in the way
-     */
-    private boolean canMove(Direction d) {
-        if (d == Direction.NORTH) {
-            if (maze.isWall(navigator.getPosition()[0] - 1, navigator.getPosition()[1])) {
-                return false;
-            }
-        }
-        else if (d == Direction.EAST) {
-            if (maze.isWall(navigator.getPosition()[0], navigator.getPosition()[1] + 1)) {
-                return false;
-            }
-        }
-        else if (d == Direction.SOUTH) {
-            if (maze.isWall(navigator.getPosition()[0] + 1, navigator.getPosition()[1])) {
-                return false;
-            }
-        }
-        else if (d == Direction.WEST) {
-            if (maze.isWall(navigator.getPosition()[0], navigator.getPosition()[1] - 1)) {
-                return false;
-            }
-        }
-        return true;
     }
 
     /**

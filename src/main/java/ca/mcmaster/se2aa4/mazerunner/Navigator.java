@@ -50,6 +50,39 @@ public class Navigator {
     }
 
     /**
+     * Checks if the finder can move by checking its adjacent cells
+     * 
+     * @param maze the maze object
+     * @param d the direction the finder is facing
+     * @return true if can move, false if there is a wall in the way
+     */
+    public boolean canMove(Maze maze, Direction d) {
+        int row = current_position[0];
+        int col = current_position[1];
+        if (d == Direction.NORTH) {
+            if (maze.isWall(row - 1, col)) {
+                return false;
+            }
+        }
+        else if (d == Direction.EAST) {
+            if (maze.isWall(row, col + 1)) {
+                return false;
+            }
+        }
+        else if (d == Direction.SOUTH) {
+            if (maze.isWall(row + 1, col)) {
+                return false;
+            }
+        }
+        else if (d == Direction.WEST) {
+            if (maze.isWall(row, col - 1)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * Turn the navigator left
      */
     public void turnLeft() {
