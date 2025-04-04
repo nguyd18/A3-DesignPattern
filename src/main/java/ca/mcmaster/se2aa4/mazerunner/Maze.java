@@ -3,11 +3,14 @@ package ca.mcmaster.se2aa4.mazerunner;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Maze class represents a maze as a 2D character array
+ * and provides methods to load the maze from a file,
+ * find the entrance and exit, and check if a cell is a wall
+ */
 public class Maze {
     
     private static final Logger logger = LogManager.getLogger();

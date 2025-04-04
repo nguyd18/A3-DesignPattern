@@ -5,7 +5,12 @@ import java.io.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * MazeLoader class is responsible for loading the maze from a file
+ * and initializing the maze object with the data from the file
+ */
 public class MazeLoader {
+    
     private static final Logger logger = LogManager.getLogger();
 
     /**

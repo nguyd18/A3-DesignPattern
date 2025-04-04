@@ -6,6 +6,7 @@ import java.util.*;
  * Navigator class to manage the position and direction of the navigator in the maze
  */
 public class Navigator {
+    
     private int[] current_position;
     private Direction current_direction;
     private final List<Observer> observers = new ArrayList<>();

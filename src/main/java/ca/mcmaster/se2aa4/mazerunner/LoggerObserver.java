@@ -3,6 +3,10 @@ package ca.mcmaster.se2aa4.mazerunner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * LoggerObserver class implements the Observer interface
+ * and logs the actions taken by the maze solver
+ */
 public class LoggerObserver implements Observer{
     
     private static final Logger logger = LogManager.getLogger();

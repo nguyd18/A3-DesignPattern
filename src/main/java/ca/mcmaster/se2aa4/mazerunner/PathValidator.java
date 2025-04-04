@@ -18,7 +18,6 @@ public class PathValidator {
         this.maze = maze;
         navigator = new Navigator(maze.getEntry(), Direction.EAST);
         navigator.addObserver(new LoggerObserver());
-        // this.end_position = maze.getExit();
     }
 
     /**
