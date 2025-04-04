@@ -50,10 +50,10 @@ public class Navigator {
     }
 
     /**
-     * Checks if the finder can move by checking its adjacent cells
+     * Checks if the navigator can move by checking its adjacent cells
      * 
      * @param maze the maze object
-     * @param d the direction the finder is facing
+     * @param d the direction the navigator is facing
      * @return true if can move, false if there is a wall in the way
      */
     public boolean canMove(Maze maze, Direction d) {
@@ -80,6 +80,21 @@ public class Navigator {
             }
         }
         return true;
+    }
+
+    /**
+     * Checks if the navigator is at the end of the maze
+     * 
+     * @param maze the maze object
+     * @return true if the finder is at the end of the maze, false if it is not
+     */
+    public boolean isAtEnd(Maze maze) {
+        int exit_row = maze.getExit()[0];
+        int exit_col = maze.getExit()[1];
+        if (current_position[0] == exit_row && current_position[1] == exit_col) {
+            return true;
+        }
+        return false;
     }
 
     /**

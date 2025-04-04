@@ -6,7 +6,6 @@ import org.apache.logging.log4j.Logger;
 public class PathFinder implements MazeSolver{
 
     private Navigator navigator;
-    private int[] end_position;
     private Maze maze;
     private StringBuffer canonical_path;
     private static final Logger logger = LogManager.getLogger();
@@ -18,7 +17,6 @@ public class PathFinder implements MazeSolver{
      */
     public PathFinder(Maze maze) {
         this.maze = maze;
-        this.end_position = maze.getExit();
         this.canonical_path = new StringBuffer();
         navigator = new Navigator(maze.getEntry(), Direction.EAST);
         navigator.addObserver(new LoggerObserver());
@@ -38,7 +36,7 @@ public class PathFinder implements MazeSolver{
         logger.trace("**** Current Position. Row: " + navigator.getPosition()[0] + " Col: " + navigator.getPosition()[1]);
         logger.trace("**** Current Direction: " + navigator.getDirection());
 
-        while (!isAtEnd()) {
+        while (!navigator.isAtEnd(maze)) {
             // Check the diagonal cell (front-right)
             if (navigator.canMove(maze, navigator.getDirection()) && navigator.canMove(maze, navigator.getRightDirection())) {
                 turnRight.execute();
@@ -82,15 +80,5 @@ public class PathFinder implements MazeSolver{
         }
         logger.info("** Maze has been solved!");
         return PathFormatter.factorizedPath(canonical_path.toString());
-    }
-
-    /**
-     * @return true if the finder is at the end of the maze, false if it is not
-     */
-    private boolean isAtEnd() {
-        if (navigator.getPosition()[0] == end_position[0] && navigator.getPosition()[1] == end_position[1]) {
-            return true;
-        }
-        return false;
     }
 }

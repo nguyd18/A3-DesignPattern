@@ -6,7 +6,6 @@ import org.apache.logging.log4j.Logger;
 public class PathValidator {
 
     private Navigator navigator;
-    private int[] end_position;
     private Maze maze;
     private static final Logger logger = LogManager.getLogger();
 
@@ -19,7 +18,7 @@ public class PathValidator {
         this.maze = maze;
         navigator = new Navigator(maze.getEntry(), Direction.EAST);
         navigator.addObserver(new LoggerObserver());
-        this.end_position = maze.getExit();
+        // this.end_position = maze.getExit();
     }
 
     /**
@@ -59,19 +58,9 @@ public class PathValidator {
             }
         }
 
-        if (isAtEnd()) {
+        if (navigator.isAtEnd(maze)) {
             return "correct path";
         }
         return "incorrect path";
-    }
-
-    /**
-     * @return true if the validator is at the end of the maze, false if it is not
-     */
-    private boolean isAtEnd() {
-        if (navigator.getPosition()[0] == end_position[0] && navigator.getPosition()[1] == end_position[1]) {
-            return true;
-        }
-        return false;
     }
 }
