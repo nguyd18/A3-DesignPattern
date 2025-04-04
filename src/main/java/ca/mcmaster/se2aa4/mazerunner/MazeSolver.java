@@ -1,8 +1,8 @@
 package ca.mcmaster.se2aa4.mazerunner;
 
+/**
+ * Interface for implementations of maze solving algorithms
+ */
 public interface MazeSolver {
-    /**
-     * Interface for implementations of maze solving algorithms
-     */
-    String findPath();
+    public String findPath();
 }

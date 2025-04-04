@@ -29,7 +29,7 @@ public class CommandTests {
      * Test to see if the TurnLeftCommand turns the navigator left
      */
     @Test
-    public void testTurnLeft() {
+    public void testTurnLeftCommand() {
         Command turnLeft = new TurnLeftCommand(navigator);
         turnLeft.execute();
         assertEquals(Direction.WEST, navigator.getDirection());
@@ -41,7 +41,7 @@ public class CommandTests {
      * Test to see if the TurnRightCommand turns the navigator right
      */
     @Test
-    public void testTurnRight() {
+    public void testTurnRightCommand() {
         Command turnRight = new TurnRightCommand(navigator);
         turnRight.execute();
         assertEquals(Direction.EAST, navigator.getDirection());

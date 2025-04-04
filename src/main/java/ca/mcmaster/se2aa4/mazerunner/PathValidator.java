@@ -92,7 +92,7 @@ public class PathValidator {
     }
 
     /**
-     * Moves the vaildator forward to the next cell
+     * Moves the validator forward to the next cell
      */
     private void moveForward() {
         if (current_direction == Direction.NORTH) {

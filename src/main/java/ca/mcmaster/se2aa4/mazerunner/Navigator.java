@@ -1,6 +1,10 @@
 package ca.mcmaster.se2aa4.mazerunner;
+
 import java.util.*;
 
+/**
+ * Navigator class to manage the position and direction of the navigator in the maze
+ */
 public class Navigator {
     private int[] current_position;
     private Direction current_direction;
@@ -11,16 +15,27 @@ public class Navigator {
         current_direction = start_direction;
     }
 
+    /**
+     * Method to add an observer to the navigator
+     * @param observer The observer to be added
+     */
     public void addObserver(Observer observer) {
         observers.add(observer);
     }
 
+    /**
+     * Method to notify all observers of an action taken
+     * @param action The action taken by the navigator
+     */
     private void notifyObservers(String action) {
         for (Observer observer : observers) {
             observer.update(action, current_position, current_direction);
         }
     }
 
+    /**
+     * Move the navigator forward in the current direction
+     */
     public void moveForward() {
         if (current_direction == Direction.NORTH) {
             current_position[0]--;
@@ -34,32 +49,53 @@ public class Navigator {
         notifyObservers("moveForward");
     }
 
+    /**
+     * Turn the navigator left
+     */
     public void turnLeft() {
         current_direction = current_direction.turnLeft();
         notifyObservers("turnLeft");
     }
 
+    /**
+     * Turn the navigator right
+     */
     public void turnRight() {
         current_direction = current_direction.turnRight();
         notifyObservers("turnRight");
     }
 
+    /**
+     * @return The current position of the navigator
+     */
     public int[] getPosition() {
         return current_position;
     }
 
+    /**
+     * @return The current direction of the navigator
+     */
     public Direction getDirection() {
         return current_direction;
     }
 
+    /**
+     * @return The direction to the left of the current direction
+     */
     public Direction getLeftDirection() {
         return current_direction.getLeftDirection(current_direction);
     }
 
+    /**
+     * @return The direction to the right of the current direction
+     */
     public Direction getRightDirection() {
         return current_direction.getRightDirection(current_direction);
     }
 
+    /**
+     * @param d Set the current direction of the navigator to this direction
+     */
     public void setDirection(Direction d) {
         this.current_direction = d;
     }
