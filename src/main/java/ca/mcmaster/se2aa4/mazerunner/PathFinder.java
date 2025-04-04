@@ -29,7 +29,9 @@ public class PathFinder implements MazeSolver{
     @Override
     public String findPath() {
 
-        Command command;
+        Command moveForward = new MoveForwardCommand(navigator);
+        Command turnRight = new TurnRightCommand(navigator);
+        Command turnLeft = new TurnLeftCommand(navigator);
 
         logger.info("** Trying to solve the maze");
         logger.trace("**** Current Position. Row: " + navigator.getPosition()[0] + " Col: " + navigator.getPosition()[1]);
@@ -39,10 +41,8 @@ public class PathFinder implements MazeSolver{
 
             // Check the diagonal cell (front-right)
             if (canMove(navigator.getDirection()) && canMove(navigator.getDirection().getRightDirection(navigator.getDirection()))) {
-                navigator.turnRight();
-                // moveForward();
-                command = new MoveForwardCommand(navigator);
-                command.execute();
+                turnRight.execute();
+                moveForward.execute();
                 logger.trace("**** Moved forward and turned right to: (" + navigator.getPosition()[0] + ", " + navigator.getPosition()[1] + ")");
                 logger.trace("**** R F");
                 canonical_path.append(" R F");
@@ -50,9 +50,7 @@ public class PathFinder implements MazeSolver{
 
             // Check the cell in front
             if (canMove(navigator.getDirection())) {
-                // moveForward();
-                command = new MoveForwardCommand(navigator);
-                command.execute();
+                moveForward.execute();
                 logger.trace("**** Moved forward to: (" + navigator.getPosition()[0] + ", " + navigator.getPosition()[1] + ")");
                 logger.trace("**** F");
                 canonical_path.append("F");
@@ -61,10 +59,8 @@ public class PathFinder implements MazeSolver{
 
             // Check the cell to the right
             if (canMove(navigator.getDirection().getRightDirection(navigator.getDirection()))) {
-                navigator.turnRight();
-                // moveForward();
-                command = new MoveForwardCommand(navigator);
-                command.execute();
+                turnRight.execute();
+                moveForward.execute();
                 logger.trace("**** Turned right and moved forward to: (" + navigator.getPosition()[0] + ", " + navigator.getPosition()[1] + ")");
                 logger.trace("**** R F");
                 canonical_path.append(" R F");
@@ -73,10 +69,8 @@ public class PathFinder implements MazeSolver{
 
             // Check the cell to the left
             if (canMove(navigator.getDirection().getLeftDirection(navigator.getDirection()))) {
-                navigator.turnLeft();
-                // moveForward();
-                command = new MoveForwardCommand(navigator);
-                command.execute();
+                turnLeft.execute();
+                moveForward.execute();
                 logger.trace("**** Turned left and moved forward to: (" + navigator.getPosition()[0] + ", " + navigator.getPosition()[1] + ")");
                 logger.trace(" L F");
                 canonical_path.append(" L F");
@@ -84,17 +78,14 @@ public class PathFinder implements MazeSolver{
             }
 
             // If it reaches a dead end
-            navigator.turnLeft();
-            navigator.turnLeft();
-            // moveForward();
-            command = new MoveForwardCommand(navigator);
-            command.execute();
+            turnLeft.execute();
+            turnLeft.execute();
+            moveForward.execute();
             logger.trace("**** Dead end. Turned around and moved forward to: (" + navigator.getPosition()[0] + ", " + navigator.getPosition()[1] + ")");
             logger.trace(" L L F");
             canonical_path.append(" L L F");
         }
         logger.info("** Maze has been solved!");
-        // System.out.println(PathFormatter.factorizedPath(canonical_path.toString()));
         return PathFormatter.factorizedPath(canonical_path.toString());
     }
 
@@ -105,7 +96,6 @@ public class PathFinder implements MazeSolver{
      * @return true if can move, false if there is a wall in the way
      */
     private boolean canMove(Direction d) {
-        int[] current_position = navigator.getPosition();
         if (d == Direction.NORTH) {
             if (maze.isWall(navigator.getPosition()[0] - 1, navigator.getPosition()[1])) {
                 return false;
@@ -127,13 +117,6 @@ public class PathFinder implements MazeSolver{
             }
         }
         return true;
-    }
-
-    /**
-     * Moves the finder forward to the next cell
-     */
-    private void moveForward() {
-        
     }
 
     /**
