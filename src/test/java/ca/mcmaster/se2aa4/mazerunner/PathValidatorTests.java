@@ -20,6 +20,20 @@ public class PathValidatorTests {
     }
 
     /**
+     * Test to see if the path validator will not validate the incorrect path to the straight maze
+     */
+    @Test
+    public void validateStraightMazeIncorrect() {
+        MazeLoader loader = new MazeLoader();
+        Maze maze = loader.load("./examples/straight.maz.txt");
+        PathValidator validator = new PathValidator(maze);
+        String path = "3F";
+        String expectedValidation = "incorrect path";
+        String actualValidation = validator.validatePath(path);
+        assertEquals(expectedValidation, actualValidation);
+    }
+
+    /**
      * Test to see if the path validator will validate the correct path to the tiny maze
      */
     @Test

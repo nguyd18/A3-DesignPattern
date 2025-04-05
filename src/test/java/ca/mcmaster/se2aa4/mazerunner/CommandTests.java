@@ -35,6 +35,8 @@ public class CommandTests {
         assertEquals(Direction.WEST, navigator.getDirection());
         turnLeft.execute();
         assertEquals(Direction.SOUTH, navigator.getDirection());
+        turnLeft.execute();
+        assertEquals(Direction.EAST, navigator.getDirection());
     }
 
     /**
@@ -47,5 +49,7 @@ public class CommandTests {
         assertEquals(Direction.EAST, navigator.getDirection());
         turnRight.execute();
         assertEquals(Direction.SOUTH, navigator.getDirection());
+        turnRight.execute();
+        assertEquals(Direction.WEST, navigator.getDirection());
     }
 }
